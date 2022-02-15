@@ -6,12 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ASP.Server.Service;
 
 namespace ASP.Server.Controllers
 {
     public class GenreController : Controller
     {
         private readonly LibraryDbContext libraryDbContext;
+        private readonly LibraryService libraryService;
 
         public GenreController(LibraryDbContext libraryDbContext)
         {
@@ -22,8 +24,7 @@ namespace ASP.Server.Controllers
         public ActionResult<IEnumerable<Genre>> List()
         {
             // récupérer les genres dans la base de donées pour qu'ils puissent etre affiches
-            List<Genre> ListGenres = libraryDbContext.Genre.ToList();
-            return View(ListGenres);
+            return View(libraryService.getListGenres());
         }
     }
 }

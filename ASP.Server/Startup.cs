@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using ASP.Server.Database;
+using ASP.Server.Service;
 
 namespace ASP.Server
 {
@@ -23,6 +24,8 @@ namespace ASP.Server
             services.AddDbContext<LibraryDbContext>(options => options.UseInMemoryDatabase("LibraryDatabase"));
             services.AddControllersWithViews().AddNewtonsoftJson().AddRazorRuntimeCompilation();;
             services.AddSwaggerDocument();
+            // services.AddSingleton<LibraryService>();
+            services.AddScoped<LibraryService>();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder ASP_Server, IWebHostEnvironment env)

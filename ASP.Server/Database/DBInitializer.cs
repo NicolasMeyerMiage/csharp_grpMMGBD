@@ -17,12 +17,12 @@ namespace ASP.Server.Database
             if (bookDbContext.Books.Any())
                 return;
 
-            Genre SF, Classic, Romance, Thriller;
+            Genre SF = new Genre() { Id = 1, Title = "SF" };
+            Genre Classic = new Genre() { Id = 2, Title = "Classic" };
+            Genre Romance = new Genre() { Id = 3, Title = "Romance" };
+            Genre Thriller = new Genre() { Id = 4, Title = "Thriller" };
             bookDbContext.Genre.AddRange(
-                SF = new Genre(),
-                Classic = new Genre(),
-                Romance = new Genre(),
-                Thriller = new Genre()
+                SF, Classic, Romance, Thriller   
             );
             bookDbContext.SaveChanges();
 
