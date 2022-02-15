@@ -12,12 +12,23 @@ namespace ASP.Server.Controllers
     public class CreateBookModel
     {
         [Required]
-        [Display(Name = "Nom")]
-        public String Name { get; set; }
+        [Display(Name = "Title")]
+        public string Title { get; set; }
 
-        // Ajouter ici tous les champ que l'utilisateur devra remplir pour ajouter un livre
+        [Required]
+        [Display(Name = "Author")]
+        public string Author { get; set; }
 
-        // Liste des genres séléctionné par l'utilisateur
+        [Required]
+        [Display(Name = "Price")]
+        public string Price { get; set; }
+
+        [Required]
+        [Display(Name = "Content")]
+        public string Contenu { get; set; }
+
+        [Required]
+        [Display(Name = "Genres")]
         public List<int> Genres { get; set; }
 
         // Liste des genres a afficher à l'utilisateur
@@ -36,7 +47,7 @@ namespace ASP.Server.Controllers
         public ActionResult<IEnumerable<Book>> List()
         {
             // récupérer les livres dans la base de donées pour qu'elle puisse être affiché
-            List<Book> ListBooks = libraryDbContext;
+            DbSet<Book> ListBooks = this.libraryDbContext.Books;
             return View(ListBooks);
         }
 
@@ -46,14 +57,29 @@ namespace ASP.Server.Controllers
             if (ModelState.IsValid)
             {
                 // Il faut intéroger la base pour récupérer l'ensemble des objets genre qui correspond aux id dans CreateBookModel.Genres
-                List<Genre> genres = null;
+                List<Genre> genres = new List<Genre>();
+                    
+                var idGenres = book.Genres.Where(genre =>
+                {
+                    return this.libraryDbContext.Genre.Select(_genre => _genre.Id == genre).Any();
+                }).ToList();
+
                 // Completer la création du livre avec toute les information nécéssaire que vous aurez ajoutez, et metter la liste des gener récupéré de la base aussi
-                libraryDbContext.Add(new Book() {  });
+                libraryDbContext.Add(new Book()
+                {
+                    Title=book.Title,
+                    Author=book.Author,
+                    Price=book.Price,
+                    Contenu=book.Contenu,
+                    Genres=genres
+
+                });
                 libraryDbContext.SaveChanges();
             }
 
+            DbSet<Genre> allGenres = this.libraryDbContext.Genre;
             // Il faut interoger la base pour récupérer tous les genres, pour que l'utilisateur puisse les slécétionné
-            return View(new CreateBookModel() { AllGenres = null } );
+            return View(new CreateBookModel() { AllGenres = allGenres } );
         }
     }
 }
