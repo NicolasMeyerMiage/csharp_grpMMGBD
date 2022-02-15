@@ -11,7 +11,7 @@ using ASP.Server.Database;
 namespace ASP.Server.Api
 {
 
-    [Route("/api/[controller]/[action]")]
+    [Route("/api/[controller]")]
     [ApiController]
     public class BookController : ControllerBase
     {
@@ -22,7 +22,7 @@ namespace ASP.Server.Api
             this.libraryDbContext = libraryDbContext;
         }
 
-        // Methode a ajouter : 
+
         // - GetBooks
         //   - Entrée: Optionel -> Liste d'Id de genre, limit -> defaut à 10, offset -> défaut à 0
         //     Le but de limit et offset est dé créer un pagination pour ne pas retourner la BDD en entier a chaque appel
@@ -30,13 +30,46 @@ namespace ASP.Server.Api
         //     la liste restourner doit être compsé des élément entre <offset> et <offset + limit>-
         //     Dans [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20] si offset=8 et limit=5, les élément retourner seront : 8, 9, 10, 11, 12
 
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<List<Book>> GetBooks(int limit=10, int offset=0, int? genre=null)
+        {
+            return Ok(libraryDbContext.Books.Select(x => x).Skip(offset).Take(limit).ToList());
+        }
+
+
         // - GetBook
         //   - Entrée: Id du livre
         //   - Sortie: Object livre entier
 
+        [HttpGet]
+        [Route("/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<Book> GetBookById(int id)
+        {
+            Book book = libraryDbContext.Books.Single(book =>  book.Id == id);
+            if (book!=null)
+                return Ok(book);
+            else
+                return NotFound();
+        }
+
         // - GetGenres
         //   - Entrée: Rien
         //   - Sortie: Liste des genres
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Route("/genres")]
+        public ActionResult<Genre> GetGenres()
+        {
+            return Ok(libraryDbContext.Genre.ToList());
+        }
+
+
 
         // Aide:
         // Pour récupéré un objet d'une table :
@@ -56,10 +89,6 @@ namespace ASP.Server.Api
 
 
         // Vous vous montre comment faire la 1er, a vous de la compléter et de faire les autres !
-        public ActionResult<List<Book>> GetBooks()
-        {
-            throw new NotImplementedException("You have to do it youtself");
-        }
 
     }
 }

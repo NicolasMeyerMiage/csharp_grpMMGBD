@@ -29,7 +29,7 @@ namespace ASP.Server.Database
             // Une fois les moèles complété Vous pouvez faire directement
             // new Book() { Author = "xxx", Name = "yyy", Price = n.nnf, Content = "ccc", Genres = new() { Romance, Thriller } }
             bookDbContext.Books.AddRange(
-                new Book(), 
+                new Book(),
                 new Book(),
                 new Book(),
                 new Book()
