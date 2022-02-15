@@ -7,11 +7,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ASP.Server.Database;
+using System.Diagnostics;
 
 namespace ASP.Server.Api
 {
 
-    [Route("/api/[controller]")]
+    [Route("/api/book")]
     [ApiController]
     public class BookController : ControllerBase
     {
@@ -35,7 +36,28 @@ namespace ASP.Server.Api
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<List<Book>> GetBooks(int limit=10, int offset=0, int? genre=null)
         {
-            return Ok(libraryDbContext.Books.Select(x => x).Skip(offset).Take(limit).ToList());
+            try
+            {
+                return Ok(libraryDbContext.Books.Select(x => x).Include(x => x.Genres).Skip(offset).Take(limit).ToList());
+                /*if(genre == null)
+                    return Ok(libraryDbContext.Books.Select(x => x).Include(x => x).Skip(offset).Take(limit).ToList());
+
+                return Ok(libraryDbContext.Books.Where(x => x.Genres.Contains(libraryDbContext.Genre.Find(genre)))
+                    .Include(x => x.Genres)
+                    .Skip(offset).Take(limit).ToList());
+                */
+            }
+            catch (InvalidOperationException e)
+            {
+                Debug.WriteLine(e);
+                return NotFound();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return NotFound();
+            }
+                
         }
 
 
@@ -43,52 +65,35 @@ namespace ASP.Server.Api
         //   - Entrée: Id du livre
         //   - Sortie: Object livre entier
 
-        [HttpGet]
-        [Route("/{id}")]
+        [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<Book> GetBookById(int id)
         {
-            Book book = libraryDbContext.Books.Single(book =>  book.Id == id);
-            if (book!=null)
+            try
+            {
+                Book book = libraryDbContext.Books.Include(x => x.Genres).Single(book => book.Id == id);
                 return Ok(book);
-            else
+                /*
+                if (book != null)
+                    return Ok(book);
+                else
+                    return NotFound();
+                */
+            }
+            catch(InvalidOperationException e)
+            {
+                Debug.WriteLine(e);
                 return NotFound();
+            }
+            catch(Exception e)
+            {
+                Debug.WriteLine(e);
+                return NotFound();
+            }
+            
+
         }
-
-        // - GetGenres
-        //   - Entrée: Rien
-        //   - Sortie: Liste des genres
-
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [Route("/genres")]
-        public ActionResult<Genre> GetGenres()
-        {
-            return Ok(libraryDbContext.Genre.ToList());
-        }
-
-
-
-        // Aide:
-        // Pour récupéré un objet d'une table :
-        //   - libraryDbContext.MyObjectCollection.<Selecteurs>.First()
-        // Pour récupéré des objets d'une table :
-        //   - libraryDbContext.MyObjectCollection.<Selecteurs>.ToList()
-        // Pour faire une requète avec filtre:
-        //   - libraryDbContext.MyObjectCollection.<Selecteurs>.Skip().<Selecteurs>
-        //   - libraryDbContext.MyObjectCollection.<Selecteurs>.Take().<Selecteurs>
-        //   - libraryDbContext.MyObjectCollection.<Selecteurs>.Where(x => x == y).<Selecteurs>
-        // Pour récupérer une 2nd table depuis la base:
-        //   - .Include(x => x.yyyyy)
-        //     ou yyyyy est la propriété liant a une autre table a récupéré
-        //
-        // Exemple:
-        //   - Ex: libraryDbContext.MyObjectCollection.Include(x => x.yyyyy).Where(x => x.yyyyyy.Contains(z)).Skip(i).Take(j).ToList()
-
-
-        // Vous vous montre comment faire la 1er, a vous de la compléter et de faire les autres !
 
     }
 }
