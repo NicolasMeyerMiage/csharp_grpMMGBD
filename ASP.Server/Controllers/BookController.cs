@@ -27,18 +27,21 @@ namespace ASP.Server.Controllers
     public class BookController : Controller
     {
         private readonly LibraryDbContext libraryDbContext;
+        private GenreController genreController;
 
-        public BookController(LibraryDbContext libraryDbContext)
+        public BookController(LibraryDbContext libraryDbContext, GenreController genreController)
         {
             this.libraryDbContext = libraryDbContext;
+            this.genreController = genreController;
         }
 
         public ActionResult<IEnumerable<Book>> List()
         {
             // récupérer les livres dans la base de donées pour qu'elle puisse être affiché
-            List<Book> ListBooks = libraryDbContext;
+            List<Book> ListBooks = null;
             return View(ListBooks);
         }
+
 
         public ActionResult<CreateBookModel> Create(CreateBookModel book)
         {
@@ -53,7 +56,8 @@ namespace ASP.Server.Controllers
             }
 
             // Il faut interoger la base pour récupérer tous les genres, pour que l'utilisateur puisse les slécétionné
-            return View(new CreateBookModel() { AllGenres = null } );
+            // new CreateBookModel() { AllGenres = null }
+            return View("Create", new CreateBookModel() { AllGenres = libraryDbContext.Genre.ToList() });
         }
     }
 }

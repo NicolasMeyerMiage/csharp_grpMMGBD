@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ASP.Server.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,5 +19,9 @@ namespace ASP.Server.Service
         }
 
         // Ajouter ici toutes vos fonctions qui peuvent être accéder a différent endroit de votre programme
+        public List<Genre> getListGenres()
+        {
+
+        }
     }
 }
