@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using ASP.Server.Database;
 using ASP.Server.Service;
+using System.Globalization;
 
 namespace ASP.Server
 {
@@ -52,6 +53,12 @@ namespace ASP.Server
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            var cultureInfo = new CultureInfo("es-US");
+            cultureInfo.NumberFormat.CurrencySymbol = "€";
+
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
             using (var scope = ASP_Server.ApplicationServices.CreateScope())
             {
