@@ -1,7 +1,7 @@
 ﻿@using ASP.Server.Controllers
 @model CreateBookModel
 @{
-    ViewData["Title"] = "Add a book";
+    ViewData["Title"] = "Add a Genre";
 }
 <style>
 .input-group {
@@ -27,31 +27,11 @@ label {
     Genres=genres
 
 -->
-<form asp-controller="Book" asp-action="Create">
+<form asp-controller="Genre" asp-action="Create">
     <div class="input-group">
         <label asp-for="Title"></label>
         <input asp-for="Title" />
     </div>
 
-    <div class="input-group">
-        <label asp-for="Author"></label>
-        <input asp-for="Author" />
-    </div>
-
-    <div class="input-group">
-        <label asp-for="Price"></label>
-        <input type="number" asp-for="Price" />
-    </div>
-
-    <div class="input-group">
-        <label asp-for="Contenu"></label>
-        <input asp-for="Contenu" />
-    </div>
-
-    <div class="input-group">
-        <label asp-for="Genres"></label>
-        <select asp-for="Genres" asp-items="@(new SelectList(Model.AllGenres,"Id","Title"))">
-        </select>
-    </div>
     <input type="submit" value="Add" style="width: 100%; margin-top: 50px" />
 </form>

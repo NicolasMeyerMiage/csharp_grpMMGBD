@@ -4,11 +4,72 @@
     ViewData["Title"] = "Home Page";
 }
 
+<style>
+    table {
+        width: 100%;
+        text-align: center;
+    }
+
+    table, th, td {
+        border: solid 1px black;
+    }
+
+    tr:nth-of-type(2n) {
+        background-color: #DDD;
+    }
+
+    th {
+        background-color: #0AF;
+    }
+</style>
+
 <div class="listeBooks">
     <h1>Liste des livres:</h1>
-    <!-- la liste des genres est dans la variable Model qui est typé en ligne 3, elle correspond à la variable xxx dans View(xxx) du controller -->
-    @foreach (var book in Model)
+    @if (Model != null && Model.Count() > 0)
     {
+        <table>
+            <thead>
+                <tr>
+                    <th>Author</th>
+                    <th>Title</th>
+                    <th>Price</th>
+                    <th>Content</th>
+                    <th>Genres</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            @foreach (var book in Model)
+            {
+                <tr>
+                    <td>@book.Title</td>
+                    <td>@book.Author</td>
+                    <td>@book.Price</td>
+                    <td>@book.Contenu</td>
+                    <td>
+                        @if (book.Genres is not null)
+                        {
+                            @String.Join(',', book.Genres);
+                        }
+                    </td>
+                    <td>
+                        Edit
+                    </td>
+                    <td>
+                        <form method="POST" asp-action="Delete" asp-controller="Book" asp-route-id="@book.Id">
+                            <input type="submit" value="Supprimer">
+                        </form>
+                    </td>
+                </tr>
+            }
+        </table>
     }
+    @if (Model == null || Model.Count() <= 0)
+    {
+      <h2 style="text-align: center;">Pas de livres!</h2>
+    }
+    <!-- la liste des genres est dans la variable Model qui est typé en ligne 3, elle correspond à la variable xxx dans View(xxx) du controller -->
 </div>
 
+
+    
