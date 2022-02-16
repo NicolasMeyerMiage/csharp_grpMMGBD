@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using WPF.Reader.Model;
 using System.Net.Http;
 using System;
+using Newtonsoft.Json;
 
 namespace WPF.Reader.Service
 {
@@ -14,9 +15,9 @@ namespace WPF.Reader.Service
         // mais plutot LibraryService.Instance.Books.Add(...)
         // ou LibraryService.Instance.Books.Clear()
         public ObservableCollection<Book> Books { get; set; } = new ObservableCollection<Book>() {
-            new Book("a","b","c","d"),
-            new Book("b","c","d","e"),
-            new Book("c","d","e","f")
+            new Book(),
+            new Book(),
+            new Book()
         };
 
         public ObservableCollection<Book> UpdateBookList()
@@ -24,15 +25,18 @@ namespace WPF.Reader.Service
              Books.Clear();
 
              HttpClient client = new HttpClient();
-             client.BaseAddress = new Uri("https://127.0.0.1:5001/");
+             client.BaseAddress = new Uri("https://localhost:5001");
              HttpResponseMessage response = client.GetAsync("/api/book").Result; 
              if (response.IsSuccessStatusCode)
              {
                   string result = response.Content.ReadAsStringAsync().Result; 
-                  var obj = System.Text.Json.JsonSerializer.Deserialize<Book>(result);
-                  Book book = new Book(obj.Title, obj.Author, obj.Price, obj.Contenu);
-                  Books.Add(book);
-                  
+                  List<Book> listBooks = JsonConvert.DeserializeObject<List<Book>>(result);
+                  listBooks.ForEach(obj =>
+                  {
+                      Book book = new Book(obj.Id, obj.Title, obj.Author, obj.Price, obj.Contenu, obj.Genres);
+                      Books.Add(book);
+                      Console.WriteLine(book);
+                  });
                   
              }
 
