@@ -28,7 +28,9 @@ namespace WPF.Reader.Service
         {
             [typeof(ViewModel.ListBook)] = typeof(Pages.ListBooks),
             [typeof(ViewModel.ReadBook)] = typeof(Pages.ReadBook),
-            [typeof(ViewModel.DetailsBook)] = typeof(Pages.DetailsBook)
+            [typeof(ViewModel.DetailsBook)] = typeof(Pages.DetailsBook),
+            [typeof(ViewModel.ListGenre)] = typeof(Pages.ListGenre)
+
         };
 
         public Frame Frame { get; init; }

@@ -17,5 +17,12 @@ namespace WPF.Reader.Model
     // A vous de completer ce qu'est un Livre !!
     public class Book
     {
+        public string Title { get; set; }
+        public string Author { get; set; }
+        public string Price { get; set; }
+        public string Contenu { get; set; }
+        public List<int> Genres { get; set; }
+
+
     }
 }

@@ -7,7 +7,7 @@ using WPF.Reader.Service;
 
 namespace WPF.Reader.ViewModel
 {
-    internal class ListBook : INotifyPropertyChanged
+    internal class ListGenre : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -16,9 +16,9 @@ namespace WPF.Reader.ViewModel
         // n'oublier pas faire de faire le binding dans ListBook.xaml !!!!
         public ObservableCollection<Book> Books => Ioc.Default.GetRequiredService<LibraryService>().Books;
 
-        public ListBook()
+        public ListGenre()
         {
-            ItemSelectedCommand = new RelayCommand(book => { /* the livre devrais etre dans la variable book */ Ioc.Default.GetRequiredService<INavigationService>().Navigate<DetailsBook>(book); });
+            ItemSelectedCommand = new RelayCommand(book => { /* the livre devrais etre dans la variable book */ Ioc.Default.GetRequiredService<NavigationService>().Navigate<DetailsBook>(book); });
         }
     }
 }

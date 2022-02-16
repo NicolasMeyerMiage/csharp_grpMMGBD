@@ -1,5 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using WPF.Reader.Model;
+using System.Net.Http;
 
 namespace WPF.Reader.Service
 {
@@ -15,6 +17,28 @@ namespace WPF.Reader.Service
             new Book(),
             new Book()
         };
+
+        public void UpdateBookList()
+        {
+             Books.Clear();
+
+             HttpClient client = new HttpClient();
+             client.BaseAddress = new Uri("https://127.0.0.1:5001/");
+             HttpResponseMessage response = client.GetAsync("api/Book/GetBooks").Result; 
+             if (response.IsSuccessStatusCode)
+             {
+                  string result = response.Content.ReadAsStringAsync().Result; 
+                  var obj = System.Text.Json.JsonSerializer.Deserialize<ServerModel>(result);
+                  Book book = new Book(obj);
+                  Books.Add(book);
+                  
+                  
+             }
+            //List<Book> books = new List<Book>();
+            
+            // books = // call to api
+            // books.CopyTo(Books);
+        }
 
         // C'est aussi ici que vous ajouterez les requète réseau pour récupérer les livres depuis le web service que vous avez fait
         // Vous pourrez alors ajouter les livres obtenu a la variable Books !

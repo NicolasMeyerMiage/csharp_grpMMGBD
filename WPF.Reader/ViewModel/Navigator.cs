@@ -29,5 +29,9 @@ namespace WPF.Reader.ViewModel
             }
             service.Navigate<ListBook>();
         });
+
+        public ICommand GoToCategory { get; init; } = new RelayCommand(x => { Ioc.Default.GetRequiredService<INavigationService>().Navigate<ListGenre>(); });
+
+        public ICommand GoToBooks { get; init; } = new RelayCommand(x => { Ioc.Default.GetRequiredService<INavigationService>().Navigate<ListBook>(); });
     }
 }
