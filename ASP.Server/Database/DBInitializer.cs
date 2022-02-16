@@ -29,10 +29,10 @@ namespace ASP.Server.Database
             // Une fois les moèles complété Vous pouvez faire directement
             // new Book() { Author = "xxx", Name = "yyy", Price = n.nnf, Content = "ccc", Genres = new() { Romance, Thriller } }
             bookDbContext.Books.AddRange(
-                new Book() { Author = "Thomas Fernand", Title = "La Marquise de New Paris", Genres = new List<Genre>() { SF, Classic }, Price = 24.99F, Contenu = "L'année est 1849 mais dans le futur." },
-                new Book() { Author = "Emile Zozo", Title = "Les Fleurs du MAAAAAAAAAL", Genres = new List<Genre>() { Classic }, Price = 19.99F, Contenu = "Vive la mort." },
-                new Book() { Author = "Françoise Delarue", Title = "L'amour Improbable", Genres = new List<Genre>() { Romance }, Price = 27.50F, Contenu = "Je vous aime !\nMoi non plus!\n:'(" },
-                new Book() { Author = "Wielfried von Garner", Title = "Der Hund", Genres = new List<Genre>() { Thriller }, Price = 14.99F, Contenu = "Woof Woof Woof Woof." }
+                new Book() { Author = "Thomas Fernand", Title = "La Marquise de New Paris", Genres = new() { SF, Classic }, Price = 24.99F, Contenu = "L'année est 1849 mais dans le futur." },
+                new Book() { Author = "Emile Zozo", Title = "Les Fleurs du MAAAAAAAAAL", Genres = new() { Classic }, Price = 19.99F, Contenu = "Vive la mort." },
+                new Book() { Author = "Françoise Delarue", Title = "L'amour Improbable", Genres = new() { Romance }, Price = 27.50F, Contenu = "Je vous aime !\nMoi non plus!\n:'(" },
+                new Book() { Author = "Wielfried von Garner", Title = "Der Hund", Genres = new() { Thriller }, Price = 14.99F, Contenu = "Woof Woof Woof Woof." }
             );
             // Vous pouvez initialiser la BDD ici
 

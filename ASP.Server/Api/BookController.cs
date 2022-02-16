@@ -36,6 +36,7 @@ namespace ASP.Server.Api
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<List<Book>> GetBooks(int limit=10, int offset=0, int? genre=null)
         {
+            limit = Math.Clamp(limit, 0, 100);
             try
             {
                 return Ok(libraryDbContext.Books.Select(x => x).Include(x => x.Genres).Skip(offset).Take(limit).ToList());
