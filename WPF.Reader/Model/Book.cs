@@ -23,6 +23,13 @@ namespace WPF.Reader.Model
         public string Contenu { get; set; }
         public List<int> Genres { get; set; }
 
-
+        public Book(string title, string author, string price, string contenu)//, List<int> genres)
+        {
+            Title = title;
+            Author = author;
+            Price = price;
+            Contenu = contenu;
+            //Genres = genres;
+        }
     }
 }

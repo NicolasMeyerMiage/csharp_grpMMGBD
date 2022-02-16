@@ -16,7 +16,7 @@
                 <DataTemplate>
                     <StackPanel>
                         <TextBlock Text="{Binding Title}" />
-                        <Button Height="50" Width="50" Command="{Binding ItemSelectedCommand}"></Button>
+                        <!-- Button Height="50" Width="50" Command="{Binding ItemSelectedCommand}"></Button> -->
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

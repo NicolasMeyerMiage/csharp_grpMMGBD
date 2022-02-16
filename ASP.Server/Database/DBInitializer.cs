@@ -22,14 +22,9 @@ namespace ASP.Server.Database
             Genre Romance = new Genre() { Id = 3, Title = "Romance" };
             Genre Thriller = new Genre() { Id = 4, Title = "Thriller" };
             bookDbContext.Genre.AddRange(
-<<<<<<< HEAD
-                SF, Classic, Romance, Thriller   
-=======
-                SF = new Genre() { Type = "Science Fiction" },
-                Classic = new Genre() { Type = "Classic" },
-                Romance = new Genre() { Type = "Romance" },
-                Thriller = new Genre() { Type = "Thriller" }
->>>>>>> main
+
+                SF, Classic, Romance, Thriller
+
             );
             bookDbContext.SaveChanges();
 
