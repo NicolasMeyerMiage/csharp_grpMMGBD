@@ -22,7 +22,7 @@ namespace ASP.Server.Controllers
 
         [Required]
         [Display(Name = "Price")]
-        public string Price { get; set; }
+        public float Price { get; set; }
 
         [Required]
         [Display(Name = "Content")]
