@@ -7,16 +7,28 @@
       xmlns:vm="clr-namespace:WPF.Reader.ViewModel"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+      Name="DetailBook"
       d:DataContext="{d:DesignInstance Type=vm:InDesignDetailsBook, d:IsDesignTimeCreatable=True}"
       Title="DetailsBook">
 
-    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+    <StackPanel>
+        
+        <TextBlock Text="{Binding DataContext.CurrentBook.Title, ElementName=DetailBook}" />
+        <TextBlock Text="{Binding DataContext.CurrentBook.Author, ElementName=DetailBook}" />
+        <TextBlock Text="{Binding DataContext.CurrentBook.Price, ElementName=DetailBook}" />
+        <ListBox ItemsSource="{Binding DataContext.CurrentBook.Genres, ElementName=DetailBook}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Id}" />
+                        <TextBlock Text="{Binding Title}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button Height="25" Width="100"  Command="{Binding DataContext.ReadCommand, ElementName=DetailBook}" CommandParameter="{Binding .}"></Button>
         <!-- il faut afficher les information du livre: Nom, Auteur, Prix, Genres-->
         <!-- Mais pas le contenu ! -->
         <!-- N'oublier pas le bouton pour aller lire le livre. La commande ReadCommand est faite pour ca ! -->
-    </Grid>
+    </StackPanel>
 </Page>
