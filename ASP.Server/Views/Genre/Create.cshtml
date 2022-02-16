@@ -1,0 +1,37 @@
+﻿@using ASP.Server.Controllers
+@model CreateBookModel
+@{
+    ViewData["Title"] = "Add a Genre";
+}
+<style>
+.input-group {
+    margin-top:10px;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+}
+input, textarea, select {
+    flex-basis:85%;
+}
+label {
+    flex-basis:10%;
+}
+</style>
+
+<!-- Voici une facon de faire, mais ce n'est pas la seul, a vous de jouer ! 
+
+    Title=book.Title,
+    Author=book.Author,
+    Price=book.Price,
+    Contenu=book.Contenu,
+    Genres=genres
+
+-->
+<form asp-controller="Genre" asp-action="Create">
+    <div class="input-group">
+        <label asp-for="Title"></label>
+        <input asp-for="Title" />
+    </div>
+
+    <input type="submit" value="Add" style="width: 100%; margin-top: 50px" />
+</form>

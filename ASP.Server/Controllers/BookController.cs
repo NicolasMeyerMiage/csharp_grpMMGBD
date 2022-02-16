@@ -50,7 +50,7 @@ namespace ASP.Server.Controllers
         public ActionResult<IEnumerable<Book>> List()
         {
             // récupérer les livres dans la base de donées pour qu'elle puisse être affiché
-            DbSet<Book> ListBooks = this.libraryDbContext.Books;
+            List<Book> ListBooks = this.libraryDbContext.Books.Include(x => x.Genres).ToList();
             return View(ListBooks);
         }
 
@@ -69,6 +69,11 @@ namespace ASP.Server.Controllers
                 }).ToList();
 
                 // Completer la création du livre avec toute les information nécéssaire que vous aurez ajoutez, et metter la liste des gener récupéré de la base aussi
+                foreach (var id in idGenres)
+                {
+                    genres.Add(this.libraryDbContext.Genre.Find(id));
+                }
+                
                 libraryDbContext.Add(new Book()
                 {
                     Title=book.Title,
@@ -85,6 +90,17 @@ namespace ASP.Server.Controllers
             // Il faut interoger la base pour récupérer tous les genres, pour que l'utilisateur puisse les slécétionné
             // new CreateBookModel() { AllGenres = null }
             return View("Create", new CreateBookModel() { AllGenres = this.libraryService.getListGenres() });
+        }
+
+        [HttpPost("Book/Delete/{id}")]
+        public IActionResult Delete(int id)
+        {
+            // récupérer les livres dans la base de donées pour qu'elle puisse être affiché
+            Book book = this.libraryDbContext.Books.Single(book => book.Id == id);
+
+            libraryDbContext.Books.Remove(book);
+            libraryDbContext.SaveChanges();
+            return RedirectPermanent("/Book/List");
         }
     }
 }
