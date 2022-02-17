@@ -84,6 +84,7 @@ namespace ASP.Server.Controllers
 
                 });
                 libraryDbContext.SaveChanges();
+                return RedirectToAction("List");
             }
 
             DbSet<Genre> allGenres = this.libraryDbContext.Genre;
