@@ -58,21 +58,21 @@
 
         <TextBlock DockPanel.Dock="Top" Text="Détails du livre" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="20px"/>
 
-        <TextBlock Margin="10,0,0,0" Text="Titre : " />
-        <TextBlock Margin="10,0,0,20" Text="{Binding DataContext.CurrentBook.Title, ElementName=DetailBook}" />
+        <TextBlock Margin="10,0,0,0" Text="Titre" />
+        <TextBlock FontSize="20" Margin="10,0,0,20" Text="{Binding DataContext.CurrentBook.Title, ElementName=DetailBook}" />
 
-        <TextBlock Margin="10,0,0,0" Text="Auteur : " />
-        <TextBlock  Margin="10,0,0,20" Text="{Binding DataContext.CurrentBook.Author, ElementName=DetailBook}" />
+        <TextBlock Margin="10,0,0,0" Text="Auteur" />
+        <TextBlock FontSize="20" Margin="10,0,0,20" Text="{Binding DataContext.CurrentBook.Author, ElementName=DetailBook}" />
 
-        <TextBlock Margin="10,0,0,0" Text="Prix : " />
-        <TextBlock Margin="10,0,0,20" Text="{Binding DataContext.CurrentBook.Price, ElementName=DetailBook}" />
+        <TextBlock Margin="10,0,0,0" Text="Prix" />
+        <TextBlock FontSize="20" Margin="10,0,0,20" Text="{Binding DataContext.CurrentBook.Price, ElementName=DetailBook}" />
 
-        <TextBlock Margin="10,0,0,0" Text="Genres : " />
+        <TextBlock Margin="10,0,0,0" Text="Genres" />
         <ListBox ItemsSource="{Binding DataContext.CurrentBook.Genres, ElementName=DetailBook}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Margin="10,0,0,0" Text="{Binding Title}" Foreground="Black" FontSize="24"  />
+                        <TextBlock Margin="10,0,0,0" Text="{Binding Title}" Foreground="Black" FontSize="20"  />
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -81,9 +81,7 @@
         
         
         <Button Command="{Binding DataContext.ReadCommand, ElementName=DetailBook}" CommandParameter="{Binding .}" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="200" Content="Lire le livre" Margin="0,20,0,27"></Button>
-        <!-- il faut afficher les information du livre: Nom, Auteur, Prix, Genres-->
-        <!-- Mais pas le contenu ! -->
-        <!-- N'oublier pas le bouton pour aller lire le livre. La commande ReadCommand est faite pour ca ! -->
+
     </StackPanel>
    
 </Page>

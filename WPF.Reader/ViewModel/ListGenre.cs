@@ -21,15 +21,8 @@ namespace WPF.Reader.ViewModel
 
         public ListGenre()
         {
-            ItemSelectedCommand = new RelayCommand(genre => { /* the livre devrais etre dans la variable book */ Ioc.Default.GetRequiredService<NavigationService>().Navigate<DetailsGenre>(genre); });
+            ItemSelectedCommand = new RelayCommand(genre => { Ioc.Default.GetRequiredService<INavigationService>().Navigate<DetailsGenre>(genre); });
         }
 
-        /*
-        private void ChangeText(object sender, RoutedEventArgs e)
-        {
-            ListGenre model = (sender as Button).DataContext as ListGenre;
-            //model.DynamicText = (new Random().Next(0, 100).ToString());
-        }
-        */
     }
 }
