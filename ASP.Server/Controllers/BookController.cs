@@ -28,12 +28,42 @@ namespace ASP.Server.Controllers
         [Display(Name = "Content")]
         public string Contenu { get; set; }
 
-        [Required]
         [Display(Name = "Genres")]
         public List<int> Genres { get; set; }
 
         // Liste des genres a afficher à l'utilisateur
         public IEnumerable<Genre> AllGenres { get; init;  }
+    }
+
+    public class EditBookModel
+    {
+
+        [Display(Name = "IdBookToEdit")]
+        public int IdBookToEdit { get; set; }
+
+        [Required]
+        [Display(Name = "Title")]
+        public string Title { get; set; }
+
+        [Required]
+        [Display(Name = "Author")]
+        public string Author { get; set; }
+
+        [Required]
+        [Display(Name = "Price")]
+        public float Price { get; set; }
+
+        [Required]
+        [Display(Name = "Content")]
+        public string Contenu { get; set; }
+
+      
+        [Required]
+        [Display(Name = "GenreToSelect")]
+        public List<int> GenreToSelect { get; set; }
+
+        // Liste des genres a afficher à l'utilisateur
+        public IEnumerable<Genre> AllGenres { get; init; }
     }
 
     public class BookController : Controller
@@ -81,7 +111,6 @@ namespace ASP.Server.Controllers
                     Price=book.Price,
                     Contenu=book.Contenu,
                     Genres=genres
-
                 });
                 libraryDbContext.SaveChanges();
                 return RedirectToAction("List");
@@ -103,6 +132,63 @@ namespace ASP.Server.Controllers
             libraryDbContext.Books.Remove(book);
             libraryDbContext.SaveChanges();
             return RedirectPermanent("/Book/List");
+        }
+
+        [HttpGet("Book/Edit/{id}")]
+        [HttpPost("Book/Edit/{id}")]
+        public ActionResult<EditBookModel> Edit(int id, EditBookModel book)
+        {
+            Book currentBook = this.libraryDbContext.Books.Include(x => x.Genres).Single(book => book.Id == id);
+
+
+            // Le IsValid est True uniquement si tous les champs de CreateBookModel marqués Required sont remplis
+            if (ModelState.IsValid)
+            {
+                // Il faut intéroger la base pour récupérer l'ensemble des objets genre qui correspond aux id dans CreateBookModel.Genres
+                List<Genre> genres = new List<Genre>();
+                
+                var idGenres = book.GenreToSelect.Where(genre =>
+                {
+                    return this.libraryDbContext.Genre.Select(_genre => _genre.Id == genre).Any();
+                }).ToList();
+
+                foreach (var idGenre in idGenres)
+                {
+                    genres.Add(this.libraryDbContext.Genre.Find(idGenre));
+                }
+
+                currentBook.Title = book.Title;
+                currentBook.Author = book.Author;
+                currentBook.Price = book.Price;
+                currentBook.Contenu = book.Contenu;
+                currentBook.Genres = genres;
+                
+                libraryDbContext.SaveChanges();
+                return RedirectToAction("List");
+            }
+
+
+            DbSet<Genre> allGenres = this.libraryDbContext.Genre;
+
+            List<int> genreToSelect = new List<int>();
+            foreach (Genre genre in currentBook.Genres)
+            {
+                genreToSelect.Add(genre.Id); 
+            }
+
+            EditBookModel bookToEdit = new EditBookModel() { 
+                IdBookToEdit=currentBook.Id,
+                Title=currentBook.Title,
+                Author = currentBook.Author,
+                Price = currentBook.Price,
+                Contenu = currentBook.Contenu,
+                GenreToSelect=genreToSelect, 
+                AllGenres = this.libraryService.getListGenres()
+            };
+
+            // Il faut interoger la base pour récupérer tous les genres, pour que l'utilisateur puisse les slécétionné
+            // new CreateBookModel() { AllGenres = null }
+            return View("Edit", bookToEdit);
         }
     }
 }

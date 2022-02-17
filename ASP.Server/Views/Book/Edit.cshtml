@@ -1,0 +1,53 @@
+﻿@using ASP.Server.Controllers
+@model EditBookModel
+@{
+    ViewData["Title"] = "Add a book";
+}
+<style>
+.input-group {
+    margin-top:10px;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+}
+input, textarea, select {
+    flex-basis:85%;
+}
+label {
+    flex-basis:10%;
+}
+</style>
+
+
+<form method="post" asp-controller="Book" asp-action="Edit">
+
+    <div class="input-group">
+        <input hidden="hidden" asp-for="IdBookToEdit" />
+    </div>
+
+    <div class="input-group">
+        <label asp-for="Title"></label>
+        <input asp-for="Title" />
+    </div>
+
+    <div class="input-group">
+        <label asp-for="Author"></label>
+        <input asp-for="Author" />
+    </div>
+
+    <div class="input-group">
+        <label asp-for="Price"></label>
+        <input type="number" step="0.01" min="0" asp-for="Price" />
+    </div>
+
+    <div class="input-group">
+        <label asp-for="Contenu"></label>
+        <input asp-for="Contenu" />
+    </div>
+
+    <div class="input-group">
+        <select name="GenreToSelect" multiple asp-for="GenreToSelect" asp-items="@(new MultiSelectList(Model.AllGenres,"Id","Title"))">
+        </select>
+    </div>
+    <input type="submit" value="Edit" style="width: 100%; margin-top: 50px" />
+</form>
