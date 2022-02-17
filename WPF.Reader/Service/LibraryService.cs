@@ -9,16 +9,13 @@ namespace WPF.Reader.Service
 {
     public class LibraryService
     {
-        // A remplacer avec vos propre données !!!!!!!!!!!!!!
-        // Pensé qu'il ne faut mieux ne pas réaffecter la variable Books, mais juste lui ajouer et / ou enlever des éléments
-        // Donc pas de LibraryService.Instance.Books = ...
-        // mais plutot LibraryService.Instance.Books.Add(...)
-        // ou LibraryService.Instance.Books.Clear()
         public ObservableCollection<Book> Books { get; set; } = new ObservableCollection<Book>() {
             new Book(),
             new Book(),
             new Book()
         };
+
+        public ObservableCollection<Genre> Genres { get; set; } = new ObservableCollection<Genre>();
 
         public ObservableCollection<Book> UpdateBookList()
         {
@@ -41,13 +38,28 @@ namespace WPF.Reader.Service
              }
 
             return Books;
-            //List<Book> books = new List<Book>();
-            
-            // books = // call to api
-            // books.CopyTo(Books);
         }
 
-        // C'est aussi ici que vous ajouterez les requète réseau pour récupérer les livres depuis le web service que vous avez fait
-        // Vous pourrez alors ajouter les livres obtenu a la variable Books !
+        public ObservableCollection<Genre> UpdateGenreList()
+        {
+            Genres.Clear();
+
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("https://localhost:5001");
+            HttpResponseMessage response = client.GetAsync("/api/genre").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string result = response.Content.ReadAsStringAsync().Result;
+                List<Genre> listGenres = JsonConvert.DeserializeObject<List<Genre>>(result);
+                listGenres.ForEach(obj =>
+                {
+                    Genre genre = new Genre(obj.Id, obj.Title);
+                    Genres.Add(genre);
+                });
+
+            }
+
+            return Genres;
+        }
     }
 }
