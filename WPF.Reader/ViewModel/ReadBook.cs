@@ -1,5 +1,7 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using System.ComponentModel;
 using WPF.Reader.Model;
+using WPF.Reader.Service;
 
 namespace WPF.Reader.ViewModel
 {
@@ -9,9 +11,9 @@ namespace WPF.Reader.ViewModel
 
         public Book CurrentBook { get; init; }
 
-        public ReadBook(Book book)
+        public ReadBook(BookNoContent book)
         {
-            CurrentBook = book;
+            CurrentBook = Ioc.Default.GetRequiredService<LibraryService>().GetBookFromID(book.Id);
         }
     }
 }

@@ -26,11 +26,10 @@ namespace WPF.Reader.Service
         /// </summary>
         private readonly Dictionary<Type, Type> viewMapping = new()
         {
-            [typeof(ViewModel.ListBook)] = typeof(Pages.ListBooks),
+            [typeof(ViewModel.ListBooks)] = typeof(Pages.ListBooks),
             [typeof(ViewModel.ReadBook)] = typeof(Pages.ReadBook),
             [typeof(ViewModel.DetailsBook)] = typeof(Pages.DetailsBook),
             [typeof(ViewModel.ListGenre)] = typeof(Pages.ListGenre),
-            [typeof(ViewModel.DetailsGenre)] = typeof(Pages.DetailsGenre),
 
         };
 

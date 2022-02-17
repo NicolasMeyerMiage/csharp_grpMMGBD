@@ -27,11 +27,11 @@ namespace WPF.Reader.ViewModel
                     entry = service.Frame.RemoveBackEntry();
                 }
             }
-            service.Navigate<ListBook>();
+            service.Navigate<ListBooks>();
         });
 
         public ICommand GoToCategory { get; init; } = new RelayCommand(x => { Ioc.Default.GetRequiredService<INavigationService>().Navigate<ListGenre>(); });
 
-        public ICommand GoToBooks { get; init; } = new RelayCommand(x => { Ioc.Default.GetRequiredService<INavigationService>().Navigate<ListBook>(); });
+        public ICommand GoToBooks { get; init; } = new RelayCommand(x => { Ioc.Default.GetRequiredService<INavigationService>().Navigate<ListBooks>(); });
     }
 }

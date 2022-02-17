@@ -9,35 +9,22 @@ namespace WPF.Reader.Service
 {
     public class LibraryService
     {
-        public ObservableCollection<Book> Books { get; set; } = new ObservableCollection<Book>() {
-            new Book(),
-            new Book(),
-            new Book()
-        };
-
         public ObservableCollection<Genre> Genres { get; set; } = new ObservableCollection<Genre>();
 
-        public ObservableCollection<Book> UpdateBookList()
+        public BookList UpdateBookList(int page, Genre genre)
         {
-             Books.Clear();
-
              HttpClient client = new HttpClient();
              client.BaseAddress = new Uri("https://localhost:5001");
-             HttpResponseMessage response = client.GetAsync("/api/book").Result; 
+             HttpResponseMessage response = client.GetAsync("/api/book?offset="+((page-1)*10)+(genre != null ? "&genreId="+genre.Id : "")).Result;
              if (response.IsSuccessStatusCode)
              {
                   string result = response.Content.ReadAsStringAsync().Result; 
-                  List<Book> listBooks = JsonConvert.DeserializeObject<List<Book>>(result);
-                  listBooks.ForEach(obj =>
-                  {
-                      Book book = new Book(obj.Id, obj.Title, obj.Author, obj.Price, obj.Contenu, obj.Genres);
-                      Books.Add(book);
-                      Console.WriteLine(book);
-                  });
-                  
+                  BookList listBooks = JsonConvert.DeserializeObject<BookList>(result);
+
+                  return listBooks;
              }
 
-            return Books;
+            return new BookList();
         }
 
         public ObservableCollection<Genre> UpdateGenreList()
@@ -62,27 +49,20 @@ namespace WPF.Reader.Service
             return Genres;
         }
 
-        public ObservableCollection<Book> UpdateBookByGenreList(Genre genre)
+        public Book GetBookFromID(int id)
         {
-            Books.Clear();
-
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("https://localhost:5001");
-            HttpResponseMessage response = client.GetAsync("/api/book?genreId="+genre.Id).Result;
+            HttpResponseMessage response = client.GetAsync("/api/book/"+id).Result;
             if (response.IsSuccessStatusCode)
             {
                 string result = response.Content.ReadAsStringAsync().Result;
-                List<Book> listBooks = JsonConvert.DeserializeObject<List<Book>>(result);
-                listBooks.ForEach(obj =>
-                {
-                    Book book = new Book(obj.Id, obj.Title, obj.Author, obj.Price, obj.Contenu, obj.Genres);
-                    Books.Add(book);
-                    Console.WriteLine(book);
-                });
+                Book listBooks = JsonConvert.DeserializeObject<Book>(result);
 
+                return listBooks;
             }
 
-            return Books;
+            return new Book();
         }
     }
 }
