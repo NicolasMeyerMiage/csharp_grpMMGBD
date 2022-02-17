@@ -11,6 +11,7 @@
     <Window.Resources>
         <model:Navigator x:Key="navigator" />
     </Window.Resources>
+    <ScrollViewer>
     <DockPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
         <Label DockPanel.Dock="Top" Content="Bibliothèque" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="30px"/>
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0,0,0,0">
@@ -21,4 +22,5 @@
        
         <ContentPresenter  Content="{Binding Path=Frame}" x:Name="Navigation"/>
     </DockPanel>
+    </ScrollViewer>
 </Window>
