@@ -66,6 +66,7 @@ namespace ASP.Server.Controllers
         public IEnumerable<Genre> AllGenres { get; init; }
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class BookController : Controller
     {
         private readonly LibraryDbContext libraryDbContext;
