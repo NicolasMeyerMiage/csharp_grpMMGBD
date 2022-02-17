@@ -3,7 +3,7 @@ using WPF.Reader.Model;
 
 namespace WPF.Reader.ViewModel
 {
-    class ReadBook : INotifyPropertyChanged
+    public class ReadBook : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -14,13 +14,4 @@ namespace WPF.Reader.ViewModel
             CurrentBook = book;
         }
     }
-
-    /* Cette classe sert juste a afficher des donnée de test dans le designer
-    class InDesignReadBook : ReadBook
-    {
-        public InDesignReadBook() : base()
-        {
-        }
-    }
-    */
 }
