@@ -17,8 +17,6 @@ namespace ASP.Server.Model
 
         [JsonIgnore]
         public List<Book> Books { get; set; }
-        public List<Book> Books { get; set; }
->>>>>>>>> Temporary merge branch 2
 
         // Mettez ici les propriété de votre livre: Nom et Livres associés
 
