@@ -94,6 +94,7 @@ namespace ASP.Server.Controllers
         }
 
         [HttpPost("Book/Delete/{id}")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult Delete(int id)
         {
             // récupérer les livres dans la base de donées pour qu'elle puisse être affiché

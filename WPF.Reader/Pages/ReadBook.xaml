@@ -15,8 +15,10 @@
     </Page.Resources>
     <StackPanel>
 
+        <Label DockPanel.Dock="Top" Content="Lecture du livre" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20px"/>
+        
         <TextBlock Text="{Binding DataContext.CurrentBook.Contenu, ElementName=ReadBookName}" />
-        <Button Grid.Row="2" Command="{Binding Path=GoBack, Source={StaticResource ResourceKey=navigator}}" CommandParameter="LIST" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="200" Content="Retourner au details" Margin="0,0,0,27"/>
+        <Button Grid.Row="2" Command="{Binding Path=GoBack, Source={StaticResource ResourceKey=navigator}}" CommandParameter="LIST" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="200" Content="Retour aux détails" Margin="0,0,0,27"/>
         <!-- il faut afficher les information du livre: Nom, Auteur, Prix, Genres-->
         <!-- Mais pas le contenu ! -->
         <!-- N'oublier pas le bouton pour aller lire le livre. La commande ReadCommand est faite pour ca ! -->

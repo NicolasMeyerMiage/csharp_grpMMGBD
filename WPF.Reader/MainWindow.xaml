@@ -12,10 +12,10 @@
         <model:Navigator x:Key="navigator" />
     </Window.Resources>
     <DockPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-        <Label DockPanel.Dock="Top" Content="Library system" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="30px"/>
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0,20,0,0">
-            <Button Command="{Binding GoToBooks}" Content="Liste des Livres" Click="Button_Click" Margin="10"/>
-            <Button Content="Liste des catégories" Command="{Binding GoToCategory}" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Label DockPanel.Dock="Top" Content="Bibliothèque" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="30px"/>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0,0,0,0">
+            <Button Width="200" Height="30" Command="{Binding GoToBooks}" Content="Liste des Livres" Click="Button_Click" Margin="10"/>
+            <Button Width="200" Height="30" Content="Liste des catégories" Command="{Binding GoToCategory}" HorizontalAlignment="Center" VerticalAlignment="Center">
             </Button>
         </StackPanel>
        

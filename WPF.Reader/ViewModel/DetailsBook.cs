@@ -18,6 +18,7 @@ namespace WPF.Reader.ViewModel
             CurrentBook = book;
             ReadCommand = new RelayCommand(ContenuBook => { Ioc.Default.GetRequiredService<INavigationService>().Navigate<ReadBook>(book); });
         }
+
     }
 
 }

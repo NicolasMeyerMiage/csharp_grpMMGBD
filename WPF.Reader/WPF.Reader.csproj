@@ -17,4 +17,10 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.3.1" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Pages\DetailsBook - Copier.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+  </ItemGroup>
 </Project>
