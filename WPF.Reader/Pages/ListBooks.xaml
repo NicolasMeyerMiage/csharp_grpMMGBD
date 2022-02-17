@@ -6,23 +6,18 @@
       xmlns:local="clr-namespace:WPF.Reader.Pages"
       xmlns:vm="clr-namespace:WPF.Reader.ViewModel"
       xmlns:model="clr-namespace:WPF.Reader.Model"
-      d:DataContext="{d:DesignInstance Type=vm:ListBook, d:IsDesignTimeCreatable=True}"
+      d:DataContext="{d:DesignInstance Type=vm:ListBooks, d:IsDesignTimeCreatable=True}"
       mc:Ignorable="d"
       Name="books"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ListBooks">
-
     <StackPanel>
         <Label DockPanel.Dock="Top" Content="Liste des livres" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20px"/>
-
+        <Label Content="{Binding Genre.Title}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20px"></Label>
         <Grid Margin="80,10,80,10">
-
-            <DataGrid Name="DG1" ItemsSource="{Binding Books}" AutoGenerateColumns="False" IsReadOnly="True">
-        
-                  <DataGrid.Columns>
-
-                    
-                    <DataGridTextColumn Foreground="Black" FontSize="20" Width="5*" Header="Titre" Binding="{Binding Title}">
+            <DataGrid Name="DG1" ItemsSource="{Binding BookList.Books}" AutoGenerateColumns="False" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Foreground="Black" FontSize="20" Width="1*" Header="Titre" Binding="{Binding Title}">
                         <DataGridColumn.HeaderStyle>
                             <Style TargetType="DataGridColumnHeader">
                                 <Setter Property="Background" Value="LightBlue"/>
@@ -30,14 +25,15 @@
                                 <Setter Property="FontSize" Value="24"/>
                                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
                             </Style>
-
-
                         </DataGridColumn.HeaderStyle>
-
-
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.HorizontalAlignment" Value="Center"/>
+                                <Setter Property="TextBlock.VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-
-                    <DataGridTemplateColumn Width="5*" Header="Détails du livre">
+                    <DataGridTemplateColumn Width="1*" Header="Détails du livre">
                         <DataGridColumn.HeaderStyle>
                             <Style TargetType="DataGridColumnHeader">
                                 <Setter Property="Background" Value="LightBlue"/>
@@ -48,16 +44,19 @@
                         </DataGridColumn.HeaderStyle>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Height="30"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Content="Détails" Margin="0,0,0,27" Command="{Binding DataContext.ItemSelectedCommand, ElementName=books}" CommandParameter="{Binding .}"></Button>
+                                <Button Height="30" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Content="Détails" Margin="0,3,0,3" Command="{Binding DataContext.ItemSelectedCommand, ElementName=books}" CommandParameter="{Binding .}"></Button>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-
-
                 </DataGrid.Columns>
-                
             </DataGrid>
-    </Grid>
+        </Grid>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Height="30" Content="Page Précédente" Command="{Binding PreviousPageCommand}" CommandParameter="{Binding CurrentPage}"></Button>
+            <Label Content="{Binding CurrentPage}" ContentStringFormat="Page actuelle: {0}"></Label>
+            <Button Height="30" Content="Page Suivante" Command="{Binding NextPageCommand}" CommandParameter="{Binding CurrentPage}"></Button>
+        
+        </StackPanel>
     </StackPanel>
 </Page>
 

@@ -11,9 +11,9 @@ namespace WPF.Reader.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
         public ICommand ReadCommand { get; set; }
 
-        public Book CurrentBook { get; init; }
+        public BookNoContent CurrentBook { get; init; }
 
-        public DetailsBook(Book book)
+        public DetailsBook(BookNoContent book)
         {
             CurrentBook = book;
             ReadCommand = new RelayCommand(ContenuBook => { Ioc.Default.GetRequiredService<INavigationService>().Navigate<ReadBook>(book); });

@@ -34,12 +34,12 @@ namespace ASP.Server.Api
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<List<Book>> GetBooks(int limit=10, int offset=0, int? genreId=null)
+        public ActionResult<BookList> GetBooks(int limit=10, int offset=0, int? genreId=null)
         {
             limit = Math.Clamp(limit, 0, 100);
             try
             {
-                IEnumerable<Book> books = libraryDbContext.Books.Select(x => x).Include(x => x.Genres);
+                IEnumerable<BookNoContent> books = libraryDbContext.Books.Include(x => x.Genres).Select(x => new BookNoContent(x));
                 if (genreId != null)
                 {
                     var genre = libraryDbContext.Genre.Single(x => x.Id == genreId);
@@ -51,7 +51,8 @@ namespace ASP.Server.Api
                         return false;
                     });
                 }
-                return Ok(books.Skip(offset).Take(limit).ToList());
+                int nbBooks = books.Count();
+                return Ok(new BookList() { BooksNumber=nbBooks, Books=books.Skip(offset).Take(limit).ToList() });
             }
             catch (InvalidOperationException e)
             {

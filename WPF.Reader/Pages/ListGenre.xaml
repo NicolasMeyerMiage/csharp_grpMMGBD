@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WPF.Reader.Pages"
+      xmlns:vm="clr-namespace:WPF.Reader.ViewModel"
       d:DataContext="{d:DesignInstance Type=vm:ListGenre, d:IsDesignTimeCreatable=True}"
       mc:Ignorable="d"
       Name="ListGenres"
